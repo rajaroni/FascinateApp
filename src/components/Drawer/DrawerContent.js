@@ -62,7 +62,7 @@ export function DrawerContent(props) {
                     )}
                     label={'HELP & FAQS'}
                     labelStyle={styles.drawerItemLabel}
-                    onPress={() => {props.navigation.navigate('ContactUs')}}
+                    onPress={() => {props.navigation.navigate('Aboutus')}}
                 />
             </DrawerContentScrollView>
         </View>

@@ -78,15 +78,15 @@ class ListingDetailScreen extends Component {
                         <View style={styles.detailView}>
                             <View style={styles.detailRow}>
                                 <Text style={styles.tdLeft}>Availablity</Text>
-                                <Text style={styles.tdRight}>{this.props.route.params.detail.availability.toUpperCase()} </Text>
+                                <Text style={styles.tdRight}>{this.props.route.params.detail.availability ? this.props.route.params.detail.availability.toUpperCase() : "N/A"} </Text>
                             </View>
                             <View style={styles.detailRow}>
                                 <Text style={styles.tdLeft}>Gender</Text>
-                                <Text style={styles.tdRight}>{this.props.route.params.detail.gender.toUpperCase()} </Text>
+                                <Text style={styles.tdRight}>{this.props.route.params.detail.gender ? this.props.route.params.detail.gender.toUpperCase() : "N/A"} </Text>
                             </View>
                             <View style={styles.detailRow}>
                                 <Text style={styles.tdLeft}>Age</Text>
-                                <Text style={styles.tdRight}>{this.props.route.params.detail.age.toUpperCase()} </Text>
+                                <Text style={styles.tdRight}>{this.props.route.params.detail.age ? this.props.route.params.detail.age.toUpperCase() : "N/A"} </Text>
                             </View>
                             {/* <View style={styles.detailRow}>
                                 <Text style={styles.tdLeft}>Brand</Text>
@@ -98,11 +98,11 @@ class ListingDetailScreen extends Component {
                             </View> */}
                             <View style={styles.detailRow}>
                                 <Text style={styles.tdLeft}>Material</Text>
-                                <Text style={styles.tdRight}>{this.props.route.params.detail.material.toUpperCase()}</Text>
+                                <Text style={styles.tdRight}>{this.props.route.params.detail.material ? this.props.route.params.detail.material.toUpperCase() : "N/A"}</Text>
                             </View>
                             <View style={styles.detailRow}>
                                 <Text style={styles.tdLeft}>Shop name</Text>
-                                <Text style={styles.tdRight}>{this.props.route.params.detail.shop_name.toUpperCase()}</Text>
+                                <Text style={styles.tdRight}>{this.props.route.params.detail.shop_name ? this.props.route.params.detail.shop_name.toUpperCase() : "N/A"}</Text>
                             </View>
                         </View>
                     </View>
