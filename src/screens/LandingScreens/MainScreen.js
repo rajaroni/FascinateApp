@@ -36,7 +36,7 @@ const tabsConfig = () => {
                 fontSize: 11,
                 margin: 0,
                 padding: 0,
-                fontFamily: Platform.OS === 'ios' ? 'FuturaPT-Bold' :'FuturaPTBold',
+                fontFamily: Platform.OS === 'ios' ? 'FuturaPT-Bold' : 'FuturaPTBold',
                 letterSpacing: 1
             },
             tabStyle: {
@@ -61,16 +61,20 @@ class MainScreen extends Component {
     Tabs(navigation) {
         return (
             <Tab.Navigator {...tabsConfig()}>
-                <Tab.Screen listeners={{
-                    tabPress: e => {
-                        Constants.selectedGender = 'men'
-                    },
-                }} name="men" component={this.CategoiresStack} options={{ tabBarLabel: "Men" }} navigation={navigation} />
+
                 <Tab.Screen listeners={{
                     tabPress: e => {
                         Constants.selectedGender = 'women'
                     },
                 }} name="women" component={this.CategoiresStack} options={{ tabBarLabel: "Women" }} navigation={navigation} />
+
+
+                <Tab.Screen listeners={{
+                    tabPress: e => {
+                        Constants.selectedGender = 'men'
+                    },
+                }} name="men" component={this.CategoiresStack} options={{ tabBarLabel: "Men" }} navigation={navigation} />
+                
             </Tab.Navigator>
         );
     }
@@ -89,7 +93,7 @@ class MainScreen extends Component {
         //  console.log(this.props)
         return (
             <Stack.Navigator>
-                <Stack.Screen name="Home" component={Recyclerlist} options={{ headerShown: false }}> 
+                <Stack.Screen name="Home" component={Recyclerlist} options={{ headerShown: false }}>
                 </Stack.Screen>
                 <Stack.Screen name="Categories" component={Categories} options={{ headerShown: false }} />
             </Stack.Navigator>

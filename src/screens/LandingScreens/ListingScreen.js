@@ -26,6 +26,7 @@ import ApiCalls from '../../Services/ApiCalls';
 import Constants from '../../utilities/Constants';
 import { getObjectData, storeObjectData } from '../../utilities/LocalStorage';
 import Keys from '../../utilities/Keys';
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 Tab = createMaterialTopTabNavigator();
 
@@ -43,10 +44,14 @@ class ListingScreen extends Component {
         loading: true,
         compare: false,
         selectedItem: '',
-        searchEnabled: false
+        searchEnabled: false,
+        showAlert: true
     }
 
+
+
     render() {
+
         return (
             <SafeAreaView style={styles.container}>
                 <StatusBar barStyle={'light-content'} />
@@ -77,16 +82,51 @@ class ListingScreen extends Component {
                         ListHeaderComponent={this.headerView}
                     />}
 
+                <AwesomeAlert
+                    show={this.state.showAlert}
+                    showProgress={false}
+                    titleStyle={{ fontSize: 25, fontFamily: Platform.OS === 'ios' ? 'FuturaPT-Medium' : 'FuturaPTMedium', alignSelf: 'center', color: 'black' }}
+                    title="Hint: How to compare"
+                    messageStyle={{ fontSize: 15, fontFamily: Platform.OS === 'ios' ? 'FuturaPT-Medium' : 'FuturaPTMedium', alignSelf: 'center', color: 'black' }}
+                    message="Just Long Press on product for a sec and you will get a compare button on top header by pressing it you will see comparison"
+                    closeOnTouchOutside={true}
+                    closeOnHardwareBackPress={false}
+                    showCancelButton={false}
+                    showConfirmButton={true}
+                    cancelText="Cancel"
+                    confirmText="OK"
+                    confirmButtonColor="black"
+                    onCancelPressed={() => {
+                        this.hideAlert();
+                    }}
+                    onConfirmPressed={() => {
+                        this.hideAlert();
+                    }}
+                />
+
+
             </SafeAreaView>
         );
     }
+    hideAlert = () => {
+        this.setState({ showAlert: false });
+        storeObjectData("isshowalert", "1")
+
+
+    };
 
     componentDidMount() {
+        this.setalert()
         this.getData()
         this.getProducts("", 'get_all_products')
-        this.getFilter("", 'searchQueryCategory') 
+        this.getFilter("", 'searchQueryCategory')
     }
 
+    async setalert() {
+        let theme =  await getObjectData("isshowalert") || "0";
+        this.setState({ showAlert: theme == "1" ? false : true })
+        console.log("Theme", theme)
+    }
     async getData() {
         let arr = await getObjectData(Keys.FAV_LIST_KEY) || []
         console.log('FAV_LIST_KEY')
@@ -104,7 +144,7 @@ class ListingScreen extends Component {
         console.log(str)
         let searchlist = [... this.state.originalProducts]
         searchlist = this.state.originalProducts.filter(obj => obj.title.includes(str))
-        this.setState( {products: searchlist})
+        this.setState({ products: searchlist })
     }
 
     onLongpress(item) {
@@ -206,8 +246,6 @@ class ListingScreen extends Component {
         }
 
         ApiCalls.postApiCall(params, endPoint).then(data => {
-            // console.log("DATA");
-            // console.log(data)
             this.setState({
                 loading: false
             })

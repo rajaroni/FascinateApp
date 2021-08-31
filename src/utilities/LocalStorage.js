@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const storeObjectData = async (key, value) => {
     try {
         const jsonValue = JSON.stringify(value)
+        console.log("Valtosave",value)
         await AsyncStorage.setItem(key, jsonValue)
     } catch (e) {
         console.log('saving error')
@@ -18,7 +19,7 @@ export const getObjectData = async (key) => {
             console.log('I AM NULL')
             return []
         } else {
-            console.log('I AM SOME VAL')
+            console.log('I AM SOME VAL', JSON.parse(jsonValue))
             return JSON.parse(jsonValue)
         }
     } catch (e) {

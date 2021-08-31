@@ -1,5 +1,5 @@
 class Constants {
-    static selectedGender = 'men';
+    static selectedGender = 'women';
 }
 
 module.exports = Constants;

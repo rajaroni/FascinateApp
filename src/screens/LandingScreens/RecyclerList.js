@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dimensions } from "react-native";
+import { Alert, Dimensions } from "react-native";
 import { RecyclerListView, DataProvider, LayoutProvider } from "recyclerlistview";
 import HomeCell from "../../components/HomeCell";
 import { BallIndicator } from 'react-native-indicators';

@@ -16,9 +16,9 @@ class HomeCell extends PureComponent {
     render() {
         return (
             <TouchableOpacity style={styles.cell} onPress={() => this.props.navigation.navigate('Categories', { title: this.props.item.name })}>
-                <Image resizeMode='cover' style={styles.banner} resizeMode='cover' source={{uri:this.props.item.img_link}}></Image>
-                <Text style={styles.nameTxt}>{this.props.item.name}</Text>
-                <Text style={styles.tagTxt}>{this.props.item.country_slug}</Text>
+                <Image resizeMode='cover' style={styles.banner} resizeMode='cover' source={{ uri: this.props.item.img_link }}></Image>
+                {this.props.item.name != "" && <Text style={styles.nameTxt}>{this.props.item.name}</Text>}
+                {this.props.item.country_slug != "" && <Text style={styles.tagTxt}>{this.props.item.country_slug}</Text>}
             </TouchableOpacity>
         );
     }
@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     cell: {
         alignItems: 'center',
         margin: 10,
+       
 
     },
     banner: {
@@ -39,14 +40,14 @@ const styles = StyleSheet.create({
 
     },
     nameTxt: {
-        fontFamily: Platform.OS === 'ios' ? 'FuturaPT-Bold' :'FuturaPTBold',
+        fontFamily: Platform.OS === 'ios' ? 'FuturaPT-Bold' : 'FuturaPTBold',
 
     },
     tagTxt: {
         marginTop: 5,
         fontSize: 13,
         color: 'gray',
-        fontFamily: Platform.OS === 'ios' ? 'FuturaPT-Medium' :'FuturaPTMedium',
+        fontFamily: Platform.OS === 'ios' ? 'FuturaPT-Medium' : 'FuturaPTMedium',
         letterSpacing: 1
     }
 });
