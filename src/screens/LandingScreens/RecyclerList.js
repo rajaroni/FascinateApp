@@ -37,16 +37,16 @@ export default class RecycleTestComponent extends React.Component {
                 switch (type) {
                     case ViewTypes.HALF_LEFT:
                         dim.width = width / 2;
-                        dim.height = 300;
+                        dim.height = 270;
 
                         break;
                     case ViewTypes.HALF_RIGHT:
                         dim.width = width / 2;
-                        dim.height = 300;
+                        dim.height = 270;
                         break;
                     case ViewTypes.FULL:
                         dim.width = width;
-                        dim.height = 300;
+                        dim.height = 270;
                         break;
                     default:
                         dim.width = 0;
@@ -72,16 +72,16 @@ export default class RecycleTestComponent extends React.Component {
                 let list = [{
                     "img_link": "https://24urbanshop.com/summernote_img/attachment-2021072795333.jpeg",
                     "name": "",
-                    "country_slug": ""
+                    "country_slug": "Shop As"
                 },
                 {
                     "img_link": data.sectionSecondItems[0].image,
-                    "name": "",
+                    "name": "Shop Now",
                     "country_slug": ""
                 },
                 {
                     "img_link": data.sectionSecondItems[1].image,
-                    "name": "",
+                    "name": "Shop Now",
                     "country_slug": ""
                 }]
                 // let list = data.categories
