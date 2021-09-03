@@ -29,11 +29,11 @@ class ListingDetailScreen extends Component {
         super(props)
         this.images = this.props.route.params.detail.images
     }
-    state={
-        isFavorite:false
+    state = {
+        isFavorite: false
     }
 
-    async componentDidMount(){
+    async componentDidMount() {
         this.isFavorite(this.props.route.params.detail)
     }
     render() {
@@ -46,13 +46,16 @@ class ListingDetailScreen extends Component {
                     <TouchableOpacity style={styles.backBtnView} onPress={() => this.props.navigation.goBack()}>
                         <Image style={styles.backBtn} source={require('../../../assets/header-back.png')}></Image>
                     </TouchableOpacity>
-                    <SliderBox
+                    {/* <SliderBox
                         images={this.images}
                         sliderBoxHeight={500}
                     // onCurrentImagePressed={index =>
                     //     console.warn(`image ${index} pressed`)
                     // }
-                    />
+                    /> */}
+                    <Image
+                        style={{ height: 500 }}
+                        source={{ uri: this.images[0] }}></Image>
                     <View style={styles.subContainer}>
                         <Text style={styles.nameTxt}>{this.props.route.params.detail.title}</Text>
                         <Text style={styles.priceTxt}>{'£' + this.props.route.params.detail.price}</Text>
@@ -71,7 +74,7 @@ class ListingDetailScreen extends Component {
                             <TouchableOpacity style={styles.cartBtn} onPress={() => this.OpenWEB(this.props.route.params.detail.link)}>
                                 <Text style={styles.cartBtnTxt}>{"SHOP AS"}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity  onPress={()=>this.addFavourite(this.props.route.params.detail)} style={styles.heartView}>
+                            <TouchableOpacity onPress={() => this.addFavourite(this.props.route.params.detail)} style={styles.heartView}>
                                 <Image style={styles.heartIcon} source={this.state.isFavorite ? require('../../../assets/heart.png') : require('../../../assets/heart-list.png')}></Image>
                             </TouchableOpacity>
                         </View>
@@ -157,9 +160,9 @@ class ListingDetailScreen extends Component {
         console.log("I am in FUnctoin")
         let arr = await getObjectData(Keys.FAV_LIST_KEY) || []
         console.log(item)
-       
+
         let index = arr.findIndex(x => x._id === item._id);
-            if (index != (-1)) {
+        if (index != (-1)) {
             console.log('Found')
             this.setState({ isFavorite: true })
         }

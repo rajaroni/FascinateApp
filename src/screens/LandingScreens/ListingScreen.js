@@ -46,8 +46,9 @@ class ListingScreen extends Component {
         compare: false,
         selectedItem: '',
         searchEnabled: false,
-        showAlert: true,
-        limit: 50
+        showAlert: false,
+        limit: 50,
+      
     }
 
 
@@ -72,8 +73,8 @@ class ListingScreen extends Component {
                         style={{ alignSelf: 'center' }}
                         color='black' /> :
                     <FlatList
-                        // onEndReached={this.handleLoadMore}
-                        // onEndReachedThreshold={0.5}
+                        onEndReached={this.handleLoadMore}
+                        onEndReachedThreshold={0.5}
                         removeClippedSubviews={true}
                         maxToRenderPerBatch={6}
                         initialNumToRender={6}
@@ -83,6 +84,7 @@ class ListingScreen extends Component {
                         renderItem={(item, index) => this.renderItem(item, index, this.props.navigation)}
                         keyExtractor={(item) => item._id}
                         numColumns={2}
+                        ListFooterComponent={this.footerview}
                         ListHeaderComponent={this.headerView}
                     />}
 
@@ -119,7 +121,7 @@ class ListingScreen extends Component {
 
         this.setState({
             limit: this.state.limit + 50,
-            loading: true
+            loading: false
         }, () => {
             this.getProducts("", 'get_all_products');
         });
@@ -140,9 +142,9 @@ class ListingScreen extends Component {
     }
 
     async setalert() {
-        let theme = await getObjectData("isshowalert") || "0";
-        this.setState({ showAlert: theme == "1" ? false : true })
-        console.log("Theme", theme)
+        let alertstatus = await getObjectData("isshowalert") || "0";
+        this.setState({ showAlert: alertstatus == "1" ? false : true })
+        console.log("Theme", alertstatus)
     }
     async getData() {
         let arr = await getObjectData(Keys.FAV_LIST_KEY) || []
@@ -182,6 +184,11 @@ class ListingScreen extends Component {
         else {
             this.setState({ compare: false })
         }
+    }
+    footerview=()=>{
+        return(
+        <Text style={styles.loadingtxt}>Loading....</Text>
+        )
     }
 
     headerView = () => {
@@ -267,20 +274,27 @@ class ListingScreen extends Component {
                 loading: false
             })
             if (data) {
-                const tmpList = [];
-                for (let i = 0; i < data.size; i++) {
-                    tmpList.push(data[i]);
-
-                }
-
+                // console.log("out")
+                // const newRecords = []
+                // const allrecord = data
+                // var count=allrecord.length-50||0
+                // console.log("CCCCCCCCC",count)
+                // for (var i = count; i < allrecord.length; i++) {
+                //     console.log("in")
+                //     newRecords.push(allrecord[i]);
+                // }
+                var newdata = [...this.state.products]
+                newdata.splice(-(this.state.limit))
+                newdata.push(...data)
                 this.setState({
-                    products: this.state.products.concat(tmpList)
+                    products: newdata,
+                    originalProducts: data
                 });
 
-                this.setState({
-                    // products: data,
-                    originalProducts: data
-                })
+                // this.setState({
+                //     products:data,
+                //     originalProducts: data
+                // })
                 this.state.products.map((item) => {
                     item.isFavorite = (this.favoriteItems.findIndex(x => x._id === item._id) == (-1)) ? false : true
                     item.selected = false;
@@ -352,7 +366,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-    }
+    },
+    loadingtxt: {
+        fontSize: 20,
+        color: 'black',
+        textAlign:'center',
+        fontFamily: Platform.OS === 'ios' ? 'FuturaPT-Medium' : 'FuturaPTMedium'
+    },
 });
 
 export default React.memo(ListingScreen);
