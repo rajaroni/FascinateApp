@@ -22,11 +22,19 @@ import {
 import { SliderBox } from "react-native-image-slider-box";
 import RBSheet from "react-native-raw-bottom-sheet";
 import Color from '../../utilities/Color';
-
+import { getObjectData, storeObjectData } from '../../utilities/LocalStorage';
+import Keys from '../../utilities/Keys';
 class ListingDetailScreen extends Component {
     constructor(props) {
         super(props)
         this.images = this.props.route.params.detail.images
+    }
+    state={
+        isFavorite:false
+    }
+
+    async componentDidMount(){
+        this.isFavorite(this.props.route.params.detail)
     }
     render() {
         console.log(this.props.route.params.detail)
@@ -63,9 +71,9 @@ class ListingDetailScreen extends Component {
                             <TouchableOpacity style={styles.cartBtn} onPress={() => this.OpenWEB(this.props.route.params.detail.link)}>
                                 <Text style={styles.cartBtnTxt}>{"SHOP AS"}</Text>
                             </TouchableOpacity>
-                            <View style={styles.heartView}>
-                                <Image style={styles.heartIcon} source={require('../../../assets/heart-list.png')}></Image>
-                            </View>
+                            <TouchableOpacity  onPress={()=>this.addFavourite(this.props.route.params.detail)} style={styles.heartView}>
+                                <Image style={styles.heartIcon} source={this.state.isFavorite ? require('../../../assets/heart.png') : require('../../../assets/heart-list.png')}></Image>
+                            </TouchableOpacity>
                         </View>
                     </View>
                     <View style={styles.bottomContainer}>
@@ -144,7 +152,39 @@ class ListingDetailScreen extends Component {
     OpenWEB = (url) => {
         Linking.openURL(url);
     };
+
+    async isFavorite(item) {
+        console.log("I am in FUnctoin")
+        let arr = await getObjectData(Keys.FAV_LIST_KEY) || []
+        console.log(item)
+       
+        let index = arr.findIndex(x => x._id === item._id);
+            if (index != (-1)) {
+            console.log('Found')
+            this.setState({ isFavorite: true })
+        }
+        else {
+            console.log('not found')
+            this.setState({ isFavorite: false })
+        }
+    }
+
+    async addFavourite(item) {
+        let arr = await getObjectData(Keys.FAV_LIST_KEY) || []
+        let index = arr.findIndex(x => x._id === item._id);
+        if (index === (-1)) {
+            arr.push(item)
+            storeObjectData(Keys.FAV_LIST_KEY, arr)
+            this.setState({ isFavorite: true })
+        } else {
+            Alert.alert('Alert', 'Item already in favorites')
+        }
+    }
+
+
 };
+
+
 
 const styles = StyleSheet.create({
     container: {

@@ -27,6 +27,7 @@ import Constants from '../../utilities/Constants';
 import { getObjectData, storeObjectData } from '../../utilities/LocalStorage';
 import Keys from '../../utilities/Keys';
 import AwesomeAlert from 'react-native-awesome-alerts';
+import { memo } from 'react/cjs/react.production.min';
 
 Tab = createMaterialTopTabNavigator();
 
@@ -45,7 +46,8 @@ class ListingScreen extends Component {
         compare: false,
         selectedItem: '',
         searchEnabled: false,
-        showAlert: true
+        showAlert: true,
+        limit: 50
     }
 
 
@@ -70,6 +72,8 @@ class ListingScreen extends Component {
                         style={{ alignSelf: 'center' }}
                         color='black' /> :
                     <FlatList
+                        // onEndReached={this.handleLoadMore}
+                        // onEndReachedThreshold={0.5}
                         removeClippedSubviews={true}
                         maxToRenderPerBatch={6}
                         initialNumToRender={6}
@@ -108,6 +112,19 @@ class ListingScreen extends Component {
             </SafeAreaView>
         );
     }
+
+    handleLoadMore = () => {
+        console.log("I am in Load More")
+        // if(!this.state.loading){ return null; }
+
+        this.setState({
+            limit: this.state.limit + 50,
+            loading: true
+        }, () => {
+            this.getProducts("", 'get_all_products');
+        });
+    };
+
     hideAlert = () => {
         this.setState({ showAlert: false });
         storeObjectData("isshowalert", "1")
@@ -123,7 +140,7 @@ class ListingScreen extends Component {
     }
 
     async setalert() {
-        let theme =  await getObjectData("isshowalert") || "0";
+        let theme = await getObjectData("isshowalert") || "0";
         this.setState({ showAlert: theme == "1" ? false : true })
         console.log("Theme", theme)
     }
@@ -216,7 +233,7 @@ class ListingScreen extends Component {
                 "gender": Constants.selectedGender
             },
             "skip": 0,
-            "limit": 50
+            "limit": this.state.limit
         }
         if (typeof this.props.route.params.title.toLowerCase() !== 'undefined') {
             params.query.pri_cate_slug = this.props.route.params.title.toLowerCase();
@@ -250,8 +267,18 @@ class ListingScreen extends Component {
                 loading: false
             })
             if (data) {
+                const tmpList = [];
+                for (let i = 0; i < data.size; i++) {
+                    tmpList.push(data[i]);
+
+                }
+
                 this.setState({
-                    products: data,
+                    products: this.state.products.concat(tmpList)
+                });
+
+                this.setState({
+                    // products: data,
                     originalProducts: data
                 })
                 this.state.products.map((item) => {
@@ -328,4 +355,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ListingScreen;
+export default React.memo(ListingScreen);
