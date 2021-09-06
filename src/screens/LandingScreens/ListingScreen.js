@@ -48,7 +48,7 @@ class ListingScreen extends Component {
         searchEnabled: false,
         showAlert: false,
         limit: 50,
-      
+
     }
 
 
@@ -144,7 +144,7 @@ class ListingScreen extends Component {
     async setalert() {
         let alertstatus = await getObjectData("isshowalert") || "0";
         this.setState({ showAlert: alertstatus == "1" ? false : true })
-        console.log("Theme", alertstatus)
+
     }
     async getData() {
         let arr = await getObjectData(Keys.FAV_LIST_KEY) || []
@@ -185,9 +185,9 @@ class ListingScreen extends Component {
             this.setState({ compare: false })
         }
     }
-    footerview=()=>{
-        return(
-        <Text style={styles.loadingtxt}>Loading....</Text>
+    footerview = () => {
+        return (
+            this.state.products.length > 0 && <Text style={styles.loadingtxt}>Loading....</Text>
         )
     }
 
@@ -283,6 +283,7 @@ class ListingScreen extends Component {
                 //     console.log("in")
                 //     newRecords.push(allrecord[i]);
                 // }
+                console.log(data)
                 var newdata = [...this.state.products]
                 newdata.splice(-(this.state.limit))
                 newdata.push(...data)
@@ -370,7 +371,7 @@ const styles = StyleSheet.create({
     loadingtxt: {
         fontSize: 20,
         color: 'black',
-        textAlign:'center',
+        textAlign: 'center',
         fontFamily: Platform.OS === 'ios' ? 'FuturaPT-Medium' : 'FuturaPTMedium'
     },
 });

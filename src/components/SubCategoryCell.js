@@ -17,7 +17,7 @@ class SubCategoryCell extends PureComponent {
     render() {
         return (
             <TouchableOpacity style={styles.cell} onPress={() => this.props.navigation.navigate('ListingScreen', { title: this.props.item.name, mainCategory: this.props.mainCategory})}>
-                <Image resizeMode='contain' style={styles.icon} source={{uri: Keys.img_base_url+this.props.item.slug}}></Image>
+                <Image  style={styles.icon} source={{uri: Keys.img_base_url+this.props.item.slug}}></Image>
                 <Text style={styles.catTxt}>{this.props.item.name}</Text>
                 {/* <View style={styles.separator}></View> */}
             </TouchableOpacity>
@@ -39,8 +39,10 @@ const styles = StyleSheet.create({
     icon: {
         width: 50,
         height: 50,
-        borderRadius: 15,
-        // backgroundColor: '#F0F0F0'
+        borderRadius:25,
+        alignItems:'center',
+        borderColor:'gray',
+        borderWidth:0.2
     },
     catTxt: {
         fontSize: 15,

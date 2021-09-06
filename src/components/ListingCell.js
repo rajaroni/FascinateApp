@@ -116,13 +116,12 @@ const styles = StyleSheet.create({
         color: '#242526',
         fontFamily: Platform.OS === 'ios' ? 'FuturaPT-Medium' : 'FuturaPTMedium',
         lineHeight: 25,
-
         letterSpacing: 1
     },
     heartIcon: {
         marginRight: 20,
-        width: 25,
-        height: 25
+        width: 20,
+        height: 20
     },
     tagTxt: {
         marginTop: 10,

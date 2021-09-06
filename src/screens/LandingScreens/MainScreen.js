@@ -83,7 +83,7 @@ class MainScreen extends Component {
         return (
             <SafeAreaView style={styles.container}>
                 <StatusBar barStyle={'light-content'} />
-                <MainHeader navigation={this.props.navigation} />
+                <MainHeader istoshow={false} navigation={this.props.navigation} />
                 {this.Tabs(this.props.navigation)}
             </SafeAreaView>
         );

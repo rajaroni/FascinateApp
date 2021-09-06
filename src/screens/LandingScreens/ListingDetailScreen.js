@@ -55,7 +55,8 @@ class ListingDetailScreen extends Component {
                     /> */}
                     <Image
                         style={{ height: 500 }}
-                        source={{ uri: this.images[0] }}></Image>
+                        source={{ uri: this.images[0] }}/>
+
                     <View style={styles.subContainer}>
                         <Text style={styles.nameTxt}>{this.props.route.params.detail.title}</Text>
                         <Text style={styles.priceTxt}>{'£' + this.props.route.params.detail.price}</Text>
@@ -299,8 +300,8 @@ const styles = StyleSheet.create({
         backgroundColor: Color.heartBg
     },
     heartIcon: {
-        width: 35,
-        height: 35,
+        width: 25,
+        height: 25,
         tintColor: Color.heartIcon
     },
     bottomContainer: {

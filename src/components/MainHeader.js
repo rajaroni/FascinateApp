@@ -28,10 +28,10 @@ class MainHeader extends PureComponent {
                     actions={[() => this.setGender('women'), () => this.setGender('men'), () => this.setGender('women')]} /> */}
                 <View style={styles.rightView}>
                     <TouchableOpacity>
-                        <Image style={styles.heartBtn} source={require('../../assets/heart.png')}></Image>
+                      <Image style={styles.heartBtn} source={require('../../assets/heart.png')}></Image>
                     </TouchableOpacity>
                     <TouchableOpacity>
-                        <Image style={styles.searchBtn} source={require('../../assets/search.png')}></Image>
+                        {this.props.istoshow==true && <Image style={styles.searchBtn} source={require('../../assets/search.png')}></Image>}
                     </TouchableOpacity>
                 </View>
             </View>
@@ -60,14 +60,14 @@ const styles = StyleSheet.create({
     dropDownView: {
         alignItems: 'center',
         flexDirection: 'row',
-        fontFamily: Platform.OS === 'ios' ? 'FuturaPT-Medium' :'FuturaPTMedium',
-        backgroundColor:'white',
+        fontFamily: Platform.OS === 'ios' ? 'FuturaPT-Medium' : 'FuturaPTMedium',
+        backgroundColor: 'white',
         marginLeft: 40
     },
     dropDownTxt: {
         fontSize: 13,
         // fontWeight: 'bold',
-        fontFamily: Platform.OS === 'ios' ? 'FuturaPT-Bold' :'FuturaPTBold',
+        fontFamily: Platform.OS === 'ios' ? 'FuturaPT-Bold' : 'FuturaPTBold',
         letterSpacing: 1
     },
     vBtn: {

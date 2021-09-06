@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F0F0F0',
         height: 130,
         marginVertical: 10,
-        borderRadius: 2,
+        borderRadius: 3,
         fontFamily: Platform.OS === 'ios' ? 'FuturaPT-Bold' :'FuturaPTBold',
         alignItems: 'center'
     },
